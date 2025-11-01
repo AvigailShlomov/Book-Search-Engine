@@ -28,7 +28,7 @@ export class LoginPageComponent {
   private commonService = inject(CommonService);
 
   readonly form = this.fb.group({
-    username: ['', Validators.required],
+    username: ['', [Validators.required, Validators.maxLength(20)]],
   });
 
   onSubmit(): void {
@@ -39,8 +39,6 @@ export class LoginPageComponent {
       this.router.navigate(['/search']);
     } else {
       this.commonService.openSnackBar(FORM_INVALID, '', 3000);
-
-      return;
     }
   }
 }
