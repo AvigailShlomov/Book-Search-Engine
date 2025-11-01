@@ -1,0 +1,16 @@
+<header class="header">
+  <h2>{{ username() }}'s Wishlist</h2>
+</header>
+
+@if (wishlist().length > 0){
+<div class="results-grid-container">
+  @for (book of wishlist(); track book.id){
+  <div class="wishlist-list">
+    <app-book-card [book]="book" [id]="book.id"></app-book-card>
+  </div>
+  }
+</div>
+
+}@else {
+<p>Wishlist is Empty</p>
+}

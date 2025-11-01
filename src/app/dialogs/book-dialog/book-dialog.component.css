@@ -1,0 +1,132 @@
+:host {
+  display: block;
+  width: 55vw;
+  max-width: 550px;
+}
+
+.dialog-content-wrapper {
+  padding: 0;
+}
+
+.book-detail-card {
+  padding: 0;
+  box-shadow: none;
+  border: none;
+  position: relative;
+  background: #ffffff;
+}
+
+.text-button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 10;
+  color: #555;
+}
+
+.card-inner-layout {
+  display: flex;
+  padding: 15px;
+}
+
+.image-column {
+  flex: 0 0 140px;
+  padding-right: 15px;
+  text-align: center;
+  border-right: 1px solid #f0f0f0;
+}
+
+.book-cover-image {
+  width: 140px;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.details-column {
+  flex-grow: 1;
+  padding-left: 15px;
+}
+
+.book-header {
+  padding: 0 0 10px 0;
+  margin-bottom: 5px;
+  border-bottom: 2px solid #3f51b5;
+  display: block;
+}
+
+.main-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 3px;
+}
+
+.main-subtitle {
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+}
+
+.book-synopsis-content {
+  padding: 0;
+}
+
+.synopsis-heading {
+  color: #3f51b5;
+  font-size: 1.1rem;
+  margin: 0 0 5px 0;
+  font-weight: 600;
+}
+
+.description-text {
+  line-height: 1.5;
+  font-size: 0.9rem;
+  color: #444;
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.card-actions-footer {
+  padding: 10px 15px;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .card-inner-layout {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+  }
+  .image-column {
+    flex: 1 1 auto;
+    border-right: none;
+    border-bottom: 1px solid #f0f0f0;
+    padding-right: 0;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+  .details-column {
+    padding-left: 0;
+  }
+  .main-title {
+    font-size: 1.6rem;
+  }
+  .card-actions-footer {
+    justify-content: center;
+    padding: 15px;
+  }
+}

@@ -1,0 +1,120 @@
+:host {
+  display: block;
+}
+
+.book-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  height: 100%;
+  min-height: 260px;
+  max-height: 300px;
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+  text-align: center;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+.book-media-area {
+  flex-shrink: 0;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.book-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.book-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+  padding: 0 0.25rem;
+}
+
+.book-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.2rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.book-authors {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 0.2rem;
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.book-extra {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+.wishlist-indicator,
+mat-card-actions {
+  margin-top: 0.4rem;
+  text-align: center;
+}
+
+.card-button {
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.375rem;
+  background-color: #7c3aed;
+  color: #ffffff;
+  font-size: 0.75rem;
+  width: 100%;
+  max-width: 160px;
+  display: block;
+  margin: 0.4rem auto; 
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card-button:hover {
+  background-color: #6d28d9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .book-card {
+    min-height: 240px;
+    max-height: 280px;
+    padding: 0.6rem;
+  }
+  .book-media-area {
+    height: 110px;
+  }
+  .book-title {
+    font-size: 0.85rem;
+  }
+  .book-authors {
+    font-size: 0.75rem;
+  }
+}

@@ -1,0 +1,57 @@
+<mat-dialog-content class="dialog-content-wrapper">
+  <mat-card class="book-detail-card" appearance="outlined">
+    <button
+      mat-icon-button
+      (click)="close()"
+      aria-label="Close dialog"
+      class="close-button"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <div class="card-inner-layout">
+      <div class="image-column">
+        <img
+          mat-card-image
+          [src]="
+            bookData.imageLinks?.thumbnail ||
+            bookData.imageLinks?.smallThumbnail ||
+            'placeholder.png'
+          "
+          [alt]="'Cover image of ' + bookData.title"
+          class="book-cover-image"
+        />
+      </div>
+
+      <div class="details-column">
+        <mat-card-header class="book-header">
+          <mat-card-title class="main-title">{{
+            bookData.title
+          }}</mat-card-title>
+          <mat-card-subtitle class="main-subtitle">{{
+            bookData.authors
+          }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="book-synopsis-content">
+          <h3 class="synopsis-heading">Description</h3>
+          <p class="description-text">
+            {{ descriptionToShow() }}
+            @if(isShowMore()){
+            <button class="text-button" (click)="toggleDescription()">
+              {{ showFull() ? "less" : "..." }}</button
+            >}
+          </p>
+        </mat-card-content>
+      </div>
+    </div>
+    @if (!isWishlist()) {
+    <mat-card-actions class="card-actions-footer" align="end">
+      <button mat-raised-button color="accent" (click)="addBookToWishlist()">
+        <mat-icon>favorite_border</mat-icon>
+        Add To My Wishlist!
+      </button>
+    </mat-card-actions>
+    }
+  </mat-card>
+</mat-dialog-content>

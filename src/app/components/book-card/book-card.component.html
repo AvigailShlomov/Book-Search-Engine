@@ -1,0 +1,38 @@
+<mat-card class="book-card" (click)="openDialog()">
+  <div class="book-media-area">
+    <img
+      class="book-thumbnail"
+      [src]="book().imageLinks?.thumbnail || 'assets/placeholder.png'"
+      alt="{{ book().title }}"
+      priority
+    />
+  </div>
+
+  <mat-card-content class="book-content">
+    <h3 class="book-title">{{ book().title }}</h3>
+
+    @if (book().authors?.length) {
+      <p class="book-authors">By {{ book().authors?.[0] || 'Unknown Author' }}</p>
+    }
+
+    @if (book().publishedDate && book().publishedDate?.length ) {
+      <p class="book-extra">Year {{ book().publishedDate?.slice(0, 4) || 'Unknown' }}</p>
+    }
+  </mat-card-content>
+
+  @if (isWishlist()) {
+    <mat-card-actions>
+      <button class="card-button"
+        mat-button
+        (click)="removeBook(); $event.stopPropagation()"
+        aria-label="Remove book from wishlist"
+      >
+        Remove
+      </button>
+    </mat-card-actions>
+  } @else {
+    <div class="wishlist-indicator">
+      <mat-icon aria-label="Add to wishlist">bookmark_border</mat-icon>
+    </div>
+  }
+</mat-card>
