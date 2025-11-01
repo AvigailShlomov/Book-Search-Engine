@@ -5,9 +5,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root',
 })
 export class CommonService {
-  private _snackBar = inject(MatSnackBar);
+  private snackBar = inject(MatSnackBar);
 
   openSnackBar(message: string, action: string, config: number) {
-    this._snackBar.open(message, action, { duration: config });
+    this.snackBar.open(message, action, { duration: config });
   }
 }
