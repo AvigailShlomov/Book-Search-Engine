@@ -13,11 +13,11 @@ import {
 } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { BookVolumeInfo } from '../../core/models/book.models';
 import { WishlistService } from '../../core/services/wishlist.service';
+import { CommonService } from '../../core/services/common.service';
 import {
   BOOK_ADDED,
   BOOK_EXIST,
@@ -31,11 +31,11 @@ import {
   styleUrl: './book-dialog.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class BookDialogComponent implements OnInit {
   private route = inject(Router);
-  private readonly wishlistService = inject(WishlistService);
-  private readonly _snackBar = inject(MatSnackBar);
+  private wishlistService = inject(WishlistService);
+  private commonService = inject(CommonService);
+
   private readonly dialogRef = inject(MatDialogRef<BookDialogComponent>);
   data: { book: BookVolumeInfo } = inject(MAT_DIALOG_DATA);
   bookData!: BookVolumeInfo;
@@ -64,16 +64,12 @@ export class BookDialogComponent implements OnInit {
     this.showFull.update((v) => !v);
   }
 
-  openSnackBar(message: string) {
-    this._snackBar.open(message, '', { duration: 3000 });
-  }
-
   addBookToWishlist() {
     const actionResult = this.wishlistService.addBookToWishlist(this.data.book);
     const message =
       actionResult === WishlistActionResult.Added ? BOOK_ADDED : BOOK_EXIST;
 
-    this.openSnackBar(message);
+    this.commonService.openSnackBar(message, '', 3000);
     this.close();
   }
 

@@ -6,8 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { UserService } from '../../core/services/user.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FORM_INVALID } from '../wishlist/wishlist-result.enum';
+import { CommonService } from '../../core/services/common.service';
 
 @Component({
   selector: 'app-login-page',
@@ -25,7 +25,7 @@ export class LoginPageComponent {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
   private readonly userService = inject(UserService);
-  private readonly _snackBar = inject(MatSnackBar);
+  private commonService = inject(CommonService);
 
   readonly form = this.fb.group({
     username: ['', Validators.required],
@@ -33,13 +33,14 @@ export class LoginPageComponent {
 
   onSubmit(): void {
     const username = this.form.value.username;
-    
+
     if (this.form.valid && username) {
       this.userService.username.set(username);
       this.router.navigate(['/search']);
     } else {
-          this._snackBar.open(FORM_INVALID, '', { duration: 3000 });
-      return; 
+      this.commonService.openSnackBar(FORM_INVALID, '', 3000);
+
+      return;
     }
   }
 }
