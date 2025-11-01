@@ -21,14 +21,7 @@ export class BookListComponent {
   public booksService = inject(BooksService);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   books = this.booksService.books;
-  isShowPaginator = signal(false);
   readonly totalBooks = computed(
     () => this.booksService.searchResultsSignal()?.totalItems ?? 0
   );
-
-  constructor() {
-    effect(() => {
-      this.isShowPaginator.set(this.totalBooks() > 0);
-    });
-  }
 }
