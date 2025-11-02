@@ -75,14 +75,7 @@ export class BookListComponent {
           startIndex: (pageIndex - 1) * pageSize,
           maxResult: pageSize,
         };
-
-        return this.booksService
-          .fetchBooksFromApi(apiRequest)
-          .pipe(
-            catchError(() =>
-              of({ totalItems: 0, kind: '' } as BooksApiResponse)
-            )
-          );
+        return this.booksService.fetchBooksFromApi(apiRequest);
       })
     );
 
@@ -93,5 +86,12 @@ export class BookListComponent {
   books = computed(() => {
     this.searchResultsSignal();
     return this.searchResultsSignal()?.items;
+  });
+
+  noResult = computed(() => {
+    const searchResult = this.searchResultsSignal();
+    return (
+      searchResult?.totalItems == 0 && searchResult?.kind == 'books#volumes'
+    );
   });
 }
