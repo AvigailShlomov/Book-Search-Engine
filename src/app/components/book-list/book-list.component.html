@@ -1,15 +1,18 @@
 <div class="results-grid-container">
-  @for (book of books(); track book.id) {
-    <app-book-card 
-      class="grid-item"
-      [book]="book.volumeInfo" 
-      [id]="book.id">
-    </app-book-card>
+  @for (book of books(); track book.id) 
+  {
+  <app-book-card class="grid-item" [book]="book.volumeInfo" [id]="book.id">
+  </app-book-card>
   }
-
-  @if(books()?.length) {
-    <div class="paginator-wrapper">
-      <app-paginator [total]="totalBooks()"></app-paginator>
-    </div>
+  
+   @if(books()?.length) 
+  {
+  <div class="paginator-wrapper">
+    <app-paginator
+      [total]="totalBooks()"
+      [(pageIndex)]="pageIndex"
+      [(pageSize)]="pageSize"
+    ></app-paginator>
+  </div>
   }
 </div>

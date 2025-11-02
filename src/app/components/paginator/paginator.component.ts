@@ -1,4 +1,9 @@
-import { Component, inject, input } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  model,
+} from '@angular/core';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { BooksService } from '../../core/services/books.service';
 
@@ -11,11 +16,13 @@ import { BooksService } from '../../core/services/books.service';
 export class PaginatorComponent {
   public booksService = inject(BooksService);
   total = input.required<number>();
+  pageSize = model.required<number>();
+  pageIndex = model.required<number>();
 
-  pageSizeOptions = [5, 10, 20];
+  pageSizeOptions = [5, 10];
 
   onChangePage(event: PageEvent) {
-    this.booksService.pageSize.set(event.pageSize);
-    this.booksService.pageIndex.set(event.pageIndex + 1);
+    this.pageSize.set(event.pageSize);
+    this.pageIndex.set(event.pageIndex + 1);
   }
 }

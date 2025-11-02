@@ -17,28 +17,25 @@ import { startWith } from 'rxjs';
     MatButtonModule,
     ReactiveFormsModule,
     MatIconModule,
-    BookListComponent
+    BookListComponent,
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
 export class SearchComponent implements OnInit {
   private userService = inject(UserService);
-  private booksService = inject(BooksService);
   username = this.userService.username;
   searchControl = new FormControl('', {
     validators: [Validators.required, Validators.maxLength(20)],
     nonNullable: true,
   });
+  userInput = signal<string>('');
 
   ngOnInit(): void {
     this.searchControl.valueChanges
       .pipe(startWith(this.searchControl.value))
       .subscribe((value) => {
-        this.booksService.pageIndex.set(1);
-        this.booksService.pageSize.set(10);
-
-        this.booksService.inputValueSignal.set(value);
+        this.userInput.set(value);
       });
   }
 }

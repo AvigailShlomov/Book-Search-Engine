@@ -1,8 +1,9 @@
 import {
   Component,
   computed,
-  effect,
   inject,
+  input,
+  Signal,
   signal,
   ViewChild,
 } from '@angular/core';
@@ -10,6 +11,20 @@ import { BooksService } from '../../core/services/books.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { BookCardComponent } from '../book-card/book-card.component';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import {
+  combineLatest,
+  debounceTime,
+  startWith,
+  Observable,
+  switchMap,
+  catchError,
+  of,
+} from 'rxjs';
+import {
+  BooksApiResponse,
+  BookApiRequest,
+} from '../../core/models/book.models';
 
 @Component({
   selector: 'app-book-list',
@@ -20,8 +35,63 @@ import { BookCardComponent } from '../book-card/book-card.component';
 export class BookListComponent {
   public booksService = inject(BooksService);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  books = this.booksService.books;
   readonly totalBooks = computed(
-    () => this.booksService.searchResultsSignal()?.totalItems ?? 0
+    () => this.searchResultsSignal()?.totalItems ?? 0
   );
+
+  userInput = input<Signal<string>>();
+  userInputSignal = computed(() => {
+    const initVal = this.userInput();
+    return initVal ? initVal() : '';
+  });
+
+  pageIndex = signal<number>(1);
+  pageSize = signal<number>(10);
+
+  // to observables for debounce
+  inputValue$ = toObservable(this.userInputSignal);
+  pageIndex$ = toObservable(this.pageIndex);
+  pageSize$ = toObservable(this.pageSize);
+
+  // updates what to search when ever a new input is typed
+  // OR when pageSize, pageIndex were changed:)
+  finalSearchValue$ = combineLatest<[string, number, number]>([
+    this.inputValue$.pipe(debounceTime(300)),
+    this.pageIndex$,
+    this.pageSize$,
+  ]).pipe(
+    startWith<[string, number, number]>([
+      this.userInputSignal(),
+      this.pageIndex(),
+      this.pageSize(),
+    ])
+  );
+
+  private searchResults$: Observable<BooksApiResponse> =
+    this.finalSearchValue$.pipe(
+      switchMap(([query, pageIndex, pageSize]) => {
+        const apiRequest: BookApiRequest = {
+          searchInput: query,
+          startIndex: (pageIndex - 1) * pageSize,
+          maxResult: pageSize,
+        };
+
+        return this.booksService
+          .fetchBooksFromApi(apiRequest)
+          .pipe(
+            catchError(() =>
+              of({ totalItems: 0, kind: '' } as BooksApiResponse)
+            )
+          );
+      })
+    );
+
+  //signal for search result
+  searchResultsSignal = toSignal(this.searchResults$);
+
+  //takes only the items for the UI
+  books = computed(() => {
+    this.searchResultsSignal();
+    return this.searchResultsSignal()?.items;
+  });
 }

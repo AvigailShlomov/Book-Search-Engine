@@ -1,8 +1,9 @@
 <div class="results-grid-container">
   <mat-paginator
     [length]="total()"
-    [pageSize]="booksService.pageSize()"
-    [pageIndex]="booksService.pageIndex() - 1"
+    [pageSize]="pageSize()"
+    [pageIndex]="pageIndex()-1"
+    
     [pageSizeOptions]="pageSizeOptions"
     (page)="onChangePage($event)"
     aria-label="Select page"
