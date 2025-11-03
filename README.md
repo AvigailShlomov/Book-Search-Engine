@@ -3,7 +3,7 @@
 An Angular web application that allows users to search books using the **Google Books API**, view detailed information in a dialog, and save favorite titles to a **personal wishlist**.
 
 Built with **Angular**, **TypeScript**, and **RxJS**, following modern Angular best practices — including **Signals**, **Reactive Forms**, and **standalone components**.
-
+** use Google Book Api **
 ---
 
 ## ✨ Features
@@ -23,14 +23,6 @@ Built with **Angular**, **TypeScript**, and **RxJS**, following modern Angular b
 - **RxJS**
 - **Angular Material**
 - **Signals** for component communication and state
-
-
-**Data flow:**
-- The search query, pagination signals, and results are all reactive.
-- When the paginator changes, the parent (`BookListComponent`) reacts automatically via signals.
-- API requests are debounced and combined using `combineLatest` from RxJS.
-
----
 
 ## ⚙️ Setup & Installation
 
