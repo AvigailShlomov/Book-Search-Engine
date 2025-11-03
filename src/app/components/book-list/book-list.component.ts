@@ -17,9 +17,7 @@ import {
   debounceTime,
   startWith,
   Observable,
-  switchMap,
-  catchError,
-  of,
+  switchMap
 } from 'rxjs';
 import {
   BooksApiResponse,
@@ -31,14 +29,15 @@ import {
   imports: [PaginatorComponent, BookCardComponent],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.css',
+  // host:{class: ''}
 })
 export class BookListComponent {
   public booksService = inject(BooksService);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   readonly totalBooks = computed(
     () => this.searchResultsSignal()?.totalItems ?? 0
   );
-
   userInput = input<Signal<string>>();
   userInputSignal = computed(() => {
     const initVal = this.userInput();
